@@ -17,7 +17,6 @@ setup(
     keywords='django tilda',
     long_description=open('README.rst').read(),
     install_requires=[
-        'django-object-actions',
         'requests',
     ],
     classifiers=[

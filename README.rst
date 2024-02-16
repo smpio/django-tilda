@@ -40,7 +40,6 @@ Quick-Start Guide
 
 ::
 
-    'django_object_actions',
     'tilda',
 
 3. Add in ``settings.py`` params:

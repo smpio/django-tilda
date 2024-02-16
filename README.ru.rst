@@ -39,7 +39,6 @@ Django Tilda
 
 ::
 
-    'django_object_actions',
     'tilda',
 
 3. Также добавь в ``settings.py``:

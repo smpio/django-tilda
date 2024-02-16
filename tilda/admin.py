@@ -1,14 +1,11 @@
-# coding: utf-8
-from django.conf import settings
 from django.contrib import (admin, messages)
-from django_object_actions import DjangoObjectActions
 from django.utils.translation import ugettext as _
 
 from . import api
 from . import models
 
 
-class TildaPageAdmin(DjangoObjectActions, admin.ModelAdmin):
+class TildaPageAdmin(admin.ModelAdmin):
     list_display = ('title', 'id', 'synchronized', 'created', )
     list_filter = ('synchronized', 'created', )
     search_fields = ('title', 'id', )
@@ -41,22 +38,23 @@ class TildaPageAdmin(DjangoObjectActions, admin.ModelAdmin):
             )
     fetch_pages.label = _(u'Fetch pages')
 
-    def synchronize_page(self, request, obj):
-        if api.api_getpageexport(obj.id):
-            messages.add_message(
-                request,
-                messages.SUCCESS,
-                _(u'Page «{}» successfuly synced from Tilda'.format(obj.title))
-            )
-        else:
-            messages.add_message(
-                request,
-                messages.ERROR,
-                _(u'Something wrong...')
-            )
-    synchronize_page.label = _(u'Synchronize')
+    def synchronize_pages(self, request, queryset):
+        for obj in queryset:
+            if api.api_getpageexport(obj.id):
+                messages.add_message(
+                    request,
+                    messages.SUCCESS,
+                    _(u'Page «{}» successfuly synced from Tilda'.format(obj.title))
+                )
+            else:
+                messages.add_message(
+                    request,
+                    messages.ERROR,
+                    _(u'Something wrong...')
+                )
+    synchronize_pages.label = _(u'Synchronize')
 
-    change_actions = ('synchronize_page', )
-    changelist_actions = ('fetch_pages', )
+    actions = ('fetch_pages', 'synchronize_pages')
+
 
 admin.site.register(models.TildaPage, TildaPageAdmin)
