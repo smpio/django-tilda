@@ -1,4 +1,7 @@
+import os
+
 import requests
+from django.conf import settings
 
 
 def download_file(url, filename):
@@ -13,3 +16,9 @@ def make_unique(original_list):
     unique_list = []
     [unique_list.append(obj) for obj in original_list if obj not in unique_list]
     return unique_list
+
+
+def make_sure_dirs_exist():
+    for directory in (settings.TILDA_MEDIA_IMAGES, settings.TILDA_MEDIA_JS, settings.TILDA_MEDIA_CSS):
+        if not os.path.exists(directory):
+            os.makedirs(directory)

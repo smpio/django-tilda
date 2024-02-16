@@ -3,7 +3,7 @@ import requests
 from django.conf import settings
 from django.utils.timezone import now
 
-from .helpers import download_file, make_unique
+from .helpers import download_file, make_unique, make_sure_dirs_exist
 from . import models
 
 
@@ -34,6 +34,7 @@ def api_getpageslist():
 
 
 def api_getpageexport(page_id):
+    make_sure_dirs_exist()
     url = '{}/getpageexport'.format(API_HOST)
     page = models.TildaPage.objects.get(id=page_id)
     payload = API_PAYLOAD.copy()
