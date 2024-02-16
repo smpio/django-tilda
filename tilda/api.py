@@ -73,6 +73,10 @@ def api_getpageexport(page_id):
                     url = os.path.join(settings.TILDA_MEDIA_IMAGES_URL, r['to'])
                     page.html = page.html.replace(r['to'], url)
                 page.save()
+            else:
+                for r in make_unique(result['images']):
+                    page.html = page.html.replace(r['to'], r['from'])
+                page.save()
 
             if settings.TILDA_MEDIA_CSS and os.path.exists(settings.TILDA_MEDIA_CSS):
                 for r in make_unique(result['css']):
