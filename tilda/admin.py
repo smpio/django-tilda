@@ -9,6 +9,7 @@ class TildaPageAdmin(admin.ModelAdmin):
     list_display = ('title', 'id', 'synchronized', 'created', )
     list_filter = ('synchronized', 'created', )
     search_fields = ('title', 'id', )
+    change_list_template = 'admin/tilda_page_change_list.html'
     readonly_fields = (
         'id',
         'title',
