@@ -16,7 +16,7 @@ class TildaPage(models.Model):
 
     title = models.CharField(
         _(u'Title'),
-        max_length=100
+        max_length=500
     )
 
     html = models.TextField(

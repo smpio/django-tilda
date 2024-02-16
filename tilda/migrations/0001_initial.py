@@ -17,7 +17,7 @@ class Migration(migrations.Migration):
             name='TildaPage',
             fields=[
                 ('id', models.CharField(max_length=50, primary_key=True, serialize=False, unique=True, verbose_name='Page id')),
-                ('title', models.CharField(max_length=100, verbose_name='Title')),
+                ('title', models.CharField(max_length=500, verbose_name='Title')),
                 ('html', models.TextField(blank=True, verbose_name='HTML')),
                 ('images', models.TextField(blank=True, verbose_name='Images')),
                 ('css', models.TextField(blank=True, verbose_name='CSS')),
