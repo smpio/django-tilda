@@ -20,10 +20,7 @@ class TildaPageAdmin(admin.ModelAdmin):
         'created',
     )
 
-    def has_add_permission(self, request):
-        return False
-
-    def fetch_pages(modeladmin, request, queryset):
+    def add_view(self, request, form_url='', extra_context=None):
         if api.api_getpageslist():
             messages.add_message(
                 request,
@@ -36,7 +33,8 @@ class TildaPageAdmin(admin.ModelAdmin):
                 messages.ERROR,
                 _(u'Nothing fetched. Perharps wrong settings')
             )
-    fetch_pages.label = _(u'Fetch pages')
+
+        return self.changelist_view(request)
 
     def synchronize_pages(self, request, queryset):
         for obj in queryset:
