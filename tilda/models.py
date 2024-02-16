@@ -1,4 +1,5 @@
 # coding: utf-8
+import json
 import os
 from django.db import models
 from django.conf import settings
@@ -56,28 +57,31 @@ class TildaPage(models.Model):
         verbose_name_plural = _(u'Tilda Pages')
 
     def get_images_list(self):
-        if self.images:
-            return [
-                os.path.join('/media/tilda/images', r['to'])
-                for r in eval(self.images)
-            ]
-        return []
+        if not self.images:
+            return []
+        data = json.loads(self.images)
+        if settings.TILDA_MEDIA_IMAGES:
+            return list(map(lambda r: os.path.join('/media/tilda/images', r['to']), data))
+        else:
+            return list(map(lambda r: r['from'], data))
 
     def get_css_list(self):
-        if self.css:
-            return [
-                os.path.join('/media/tilda/css', r['to'])
-                for r in eval(self.css)
-            ]
-        return []
+        if not self.css:
+            return []
+        data = json.loads(self.css)
+        if settings.TILDA_MEDIA_CSS:
+            return list(map(lambda r: os.path.join('/media/tilda/css', r['to']), data))
+        else:
+            return list(map(lambda r: r['from'], data))
 
     def get_js_list(self):
-        if self.js:
-            return [
-                os.path.join('/media/tilda/js', r['to'])
-                for r in eval(self.js)
-            ]
-        return []
+        if not self.js:
+            return []
+        data = json.loads(self.js)
+        if settings.TILDA_MEDIA_JS:
+            return list(map(lambda r: os.path.join('/media/tilda/js', r['to']), data))
+        else:
+            return list(map(lambda r: r['from'], data))
 
     def _path_images_list(self):
         if self.images:

@@ -1,3 +1,4 @@
+import json
 import os
 import requests
 from django.conf import settings
@@ -59,26 +60,29 @@ def api_getpageexport(page_id):
             result = res['result']
             page.title = result['title']
             page.html = result['html']
-            page.images = result['images']
-            page.css = result['css']
-            page.js = result['js']
+            page.images = json.dumps(result['images'])
+            page.css = json.dumps(result['css'])
+            page.js = json.dumps(result['js'])
             page.synchronized = now()
             page.save()
 
-            for r in make_unique(result['images']):
-                filename = os.path.join(settings.TILDA_MEDIA_IMAGES, r['to'])
-                download_file(r['from'], filename)
-                url = os.path.join(settings.TILDA_MEDIA_IMAGES_URL, r['to'])
-                page.html = page.html.replace(r['to'], url)
-            page.save()
+            if settings.TILDA_MEDIA_IMAGES and os.path.exists(settings.TILDA_MEDIA_IMAGES):
+                for r in make_unique(result['images']):
+                    filename = os.path.join(settings.TILDA_MEDIA_IMAGES, r['to'])
+                    download_file(r['from'], filename)
+                    url = os.path.join(settings.TILDA_MEDIA_IMAGES_URL, r['to'])
+                    page.html = page.html.replace(r['to'], url)
+                page.save()
 
-            for r in make_unique(result['css']):
-                filename = os.path.join(settings.TILDA_MEDIA_CSS, r['to'])
-                download_file(r['from'], filename)
+            if settings.TILDA_MEDIA_CSS and os.path.exists(settings.TILDA_MEDIA_CSS):
+                for r in make_unique(result['css']):
+                    filename = os.path.join(settings.TILDA_MEDIA_CSS, r['to'])
+                    download_file(r['from'], filename)
 
-            for r in make_unique(result['js']):
-                filename = os.path.join(settings.TILDA_MEDIA_JS, r['to'])
-                download_file(r['from'], filename)
+            if settings.TILDA_MEDIA_JS and os.path.exists(settings.TILDA_MEDIA_JS):
+                for r in make_unique(result['js']):
+                    filename = os.path.join(settings.TILDA_MEDIA_JS, r['to'])
+                    download_file(r['from'], filename)
 
             return True
     return False

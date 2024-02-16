@@ -20,5 +20,7 @@ def make_unique(original_list):
 
 def make_sure_dirs_exist():
     for directory in (settings.TILDA_MEDIA_IMAGES, settings.TILDA_MEDIA_JS, settings.TILDA_MEDIA_CSS):
+        if not directory:
+            continue
         if not os.path.exists(directory):
             os.makedirs(directory)
