@@ -36,7 +36,7 @@ def api_getpageslist():
 
 def api_getpageexport(page_id):
     make_sure_dirs_exist()
-    url = '{}/getpageexport'.format(API_HOST)
+    url = '{}/getpagefullexport'.format(API_HOST)
     page = models.TildaPage.objects.get(id=page_id)
     payload = API_PAYLOAD.copy()
     payload['pageid'] = page.id
@@ -82,11 +82,19 @@ def api_getpageexport(page_id):
                 for r in make_unique(result['css']):
                     filename = os.path.join(settings.TILDA_MEDIA_CSS, r['to'])
                     download_file(r['from'], filename)
+            else:
+                for r in make_unique(result['css']):
+                    page.html = page.html.replace(r['to'], r['from'])
+                page.save()
 
             if settings.TILDA_MEDIA_JS and os.path.exists(settings.TILDA_MEDIA_JS):
                 for r in make_unique(result['js']):
                     filename = os.path.join(settings.TILDA_MEDIA_JS, r['to'])
                     download_file(r['from'], filename)
+            else:
+                for r in make_unique(result['js']):
+                    page.html = page.html.replace(r['to'], r['from'])
+                page.save()
 
             return True
     return False
