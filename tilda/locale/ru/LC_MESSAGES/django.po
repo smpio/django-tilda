@@ -84,6 +84,26 @@ msgstr "страница"
 msgid "Tilda Pages"
 msgstr "Tilda Страницы"
 
+#: models.py:118
+msgid "Tilda Page"
+msgstr "Tilda Страница"
+
+#: models.py:120
+msgid "Public path to page"
+msgstr "Публичный путь к странице"
+
+#: models.py:120
+msgid "E.g.: /my-landing/mobile/"
+msgstr "Пример: /my-landing/mobile/"
+
+#: models.py:122
+msgid "Is published"
+msgstr "Опубликована ли страница"
+
+#: models.py:124
+msgid "Note"
+msgstr "Для заметок"
+
 #: templates/tilda/widget.html:6
 msgid ""
 "Insert TILDA_PUBLIC_KEY, TILDA_SECRET_KEY, TILDA_PROJECTID in settings.py"

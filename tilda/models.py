@@ -108,7 +108,18 @@ class TildaPage(models.Model):
         return []
 
     def __unicode__(self):
-        return self.title
+        return '#%s %s' % (self.id, self.title)
 
     def __str__(self):
-        return self.title
+        return '#%s %s' % (self.id, self.title)
+
+
+class PublishedPage(models.Model):
+    tilda_page = models.ForeignKey(TildaPage, verbose_name=_(u'Tilda page'),
+                                   on_delete=models.CASCADE, null=False)
+    path = models.CharField(_(u'Public path to page'), help_text=_(u'E.g.: /my-landing/mobile/'),
+                            max_length=200, null=False)
+    is_enabled = models.BooleanField(_(u'Is published'),
+                                     default=True)
+    note = models.TextField(_(u'Note'),
+                            null=True, blank=True)

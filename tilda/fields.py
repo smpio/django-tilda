@@ -30,6 +30,7 @@ class TildaPageField(models.ForeignKey):
 
     def __init__(self, *args, **kwargs):
         kwargs['to'] = 'tilda.TildaPage'
+        kwargs['on_delete'] = models.CASCADE
         super(TildaPageField, self).__init__(*args, **kwargs)
 
     def formfield(self, **kwargs):

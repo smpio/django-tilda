@@ -1,5 +1,5 @@
 from django.contrib import (admin, messages)
-from django.utils.translation import ugettext as _
+from django.utils.translation import gettext_lazy as _
 
 from . import api
 from . import models
@@ -56,4 +56,11 @@ class TildaPageAdmin(admin.ModelAdmin):
     actions = ('fetch_pages', 'synchronize_pages')
 
 
+class PublishedPageAdmin(admin.ModelAdmin):
+    list_display = ('tilda_page', 'path', 'is_enabled', 'note')
+    list_filter = ('is_enabled', )
+    search_fields = ('path', )
+
+
 admin.site.register(models.TildaPage, TildaPageAdmin)
+admin.site.register(models.PublishedPage, PublishedPageAdmin)
