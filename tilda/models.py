@@ -123,3 +123,6 @@ class PublishedPage(models.Model):
                                      default=True)
     note = models.TextField(_(u'Note'),
                             null=True, blank=True)
+
+    class Meta:
+        unique_together = ('path', 'is_enabled')
