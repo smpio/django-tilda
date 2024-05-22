@@ -120,7 +120,7 @@ class PublishedPage(models.Model):
     tilda_page = models.ForeignKey(TildaPage, verbose_name=_(u'Tilda page'),
                                    on_delete=models.CASCADE, null=False)
     path = models.CharField(_(u'Public path to page'), help_text=_(u'E.g.: /my-landing/mobile'),
-                            validators=[RegexValidator(r'\/[\/\w-]*[\w-]')], max_length=200, null=False, blank=False)
+                            validators=[RegexValidator(r'^\/[\/\w-]*[\w-]$')], max_length=200, null=False, blank=False)
     is_enabled = models.BooleanField(_(u'Is published'),
                                      default=True)
     note = models.TextField(_(u'Note'),
