@@ -16,7 +16,7 @@ class Migration(migrations.Migration):
             name='PublishedPage',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('path', models.CharField(help_text='E.g.: /my-landing/mobile', max_length=200, validators=[django.core.validators.RegexValidator('^\\/[\\/\\w-]*[\\w-]$')], verbose_name='Public path to page')),
+                ('path', models.CharField(help_text='E.g.: /my-landing/mobile', max_length=200, validators=[django.core.validators.RegexValidator('^\\/[\\/\\w-]*$')], verbose_name='Public path to page')),
                 ('is_enabled', models.BooleanField(default=True, verbose_name='Is published')),
                 ('note', models.TextField(blank=True, null=True, verbose_name='Note')),
                 ('tilda_page', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='tilda.tildapage', verbose_name='Tilda page')),
