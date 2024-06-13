@@ -4,7 +4,7 @@ import requests
 from django.conf import settings
 from django.utils.timezone import now
 
-from .helpers import download_file, make_unique, make_sure_dirs_exist
+from .helpers import download_file, make_unique, make_sure_dirs_exist, make_unique_by_key
 from . import models
 
 
@@ -74,7 +74,7 @@ def api_getpageexport(page_id):
                     page.html = page.html.replace(r['to'], url)
                 page.save()
             else:
-                for r in make_unique(result['images']):
+                for r in make_unique_by_key(result['images'], 'to'):
                     page.html = page.html.replace(r['to'], r['from'])
                 page.save()
 
@@ -83,7 +83,7 @@ def api_getpageexport(page_id):
                     filename = os.path.join(settings.TILDA_MEDIA_CSS, r['to'])
                     download_file(r['from'], filename)
             else:
-                for r in make_unique(result['css']):
+                for r in make_unique_by_key(result['css'], 'to'):
                     page.html = page.html.replace(r['to'], r['from'])
                 page.save()
 
@@ -92,7 +92,7 @@ def api_getpageexport(page_id):
                     filename = os.path.join(settings.TILDA_MEDIA_JS, r['to'])
                     download_file(r['from'], filename)
             else:
-                for r in make_unique(result['js']):
+                for r in make_unique_by_key(result['js'], 'to'):
                     page.html = page.html.replace(r['to'], r['from'])
                 page.save()
 

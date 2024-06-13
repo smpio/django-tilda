@@ -18,6 +18,14 @@ def make_unique(original_list):
     return unique_list
 
 
+def make_unique_by_key(original_list, key):
+    unique_dict = {}
+    for obj in original_list:
+        if obj.get(key) not in unique_dict:
+            unique_dict[obj.get(key)] = obj
+    return list(unique_dict.values())
+
+
 def make_sure_dirs_exist():
     for directory in (settings.TILDA_MEDIA_IMAGES, settings.TILDA_MEDIA_JS, settings.TILDA_MEDIA_CSS):
         if not directory:
